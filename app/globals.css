@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf9f7;
+  color: #3a3531;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Retro styling */
+.card-retro {
+  @apply border-2 border-neutral-900 rounded-sm shadow-retro bg-white;
+}
+
+.btn-retro {
+  @apply px-4 py-2 border-2 border-neutral-900 rounded-sm font-semibold bg-primary-500 text-white hover:bg-primary-600 transition-colors shadow-retro cursor-pointer;
+}
+
+.badge-retro {
+  @apply inline-block px-3 py-1 bg-accent-500 border border-neutral-900 rounded-sm text-sm font-semibold text-neutral-900;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
