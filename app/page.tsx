@@ -14,17 +14,19 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
-    <main className="min-h-screen bg-cream">
+    <main className="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-50">
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div className="p-8 max-w-7xl mx-auto">
-        {activeTab === "dashboard" && <Dashboard />}
-        {activeTab === "timeline" && <Timeline />}
-        {activeTab === "tasks" && <Tasks />}
-        {activeTab === "partners" && <Partners />}
-        {activeTab === "content" && <ContentInventory />}
-        {activeTab === "cadence" && <Cadence />}
-        {activeTab === "research" && <Research />}
+      <div className="px-6 py-8 max-w-7xl mx-auto">
+        <div className="animate-fadeIn">
+          {activeTab === "dashboard" && <Dashboard />}
+          {activeTab === "timeline" && <Timeline />}
+          {activeTab === "tasks" && <Tasks />}
+          {activeTab === "partners" && <Partners />}
+          {activeTab === "content" && <ContentInventory />}
+          {activeTab === "cadence" && <Cadence />}
+          {activeTab === "research" && <Research />}
+        </div>
       </div>
     </main>
   );
