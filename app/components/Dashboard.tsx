@@ -135,8 +135,8 @@ export default function Dashboard() {
 
         <div className="card-retro bg-white">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-primary-50 rounded-lg">
-              <AlertCircle className="text-primary-600" size={28} />
+            <div className="p-3 bg-red-50 rounded-lg">
+              <AlertCircle className="text-red-600" size={28} />
             </div>
             <div className="flex-1">
               <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Blockers</p>

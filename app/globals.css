@@ -13,8 +13,8 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #fefdfb 0%, #faf8f6 100%);
-  color: #3d3a36;
+  background: #f9fafb;
+  color: #1f2937;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
@@ -24,17 +24,17 @@ body {
 
 /* Cards - clean, spacious, professional */
 .card-retro {
-  @apply rounded-xl bg-white border border-neutral-100 shadow-sm hover:shadow-md transition-all duration-200 p-6;
+  @apply rounded-lg bg-white border border-neutral-200 shadow-sm hover:shadow-md transition-all duration-200 p-6;
 }
 
 .card-retro:hover {
-  border-color: #ddd8d0;
+  border-color: #d1d5db;
   transform: translateY(-1px);
 }
 
 /* Buttons - smooth interactions */
 .btn-retro {
-  @apply px-4 py-2.5 rounded-lg font-semibold bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md;
+  @apply px-4 py-2.5 rounded-lg font-semibold bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-300;
 }
 
 .btn-retro:disabled {
@@ -43,13 +43,13 @@ body {
 
 /* Badges */
 .badge-retro {
-  @apply inline-block px-3 py-1.5 bg-accent-500 rounded-md text-xs font-semibold text-neutral-900 shadow-sm;
+  @apply inline-block px-3 py-1.5 bg-accent-100 text-accent-700 rounded-md text-xs font-semibold shadow-sm;
 }
 
 /* Typography - refined */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  color: #3d3a36;
+  color: #111827;
   margin-bottom: 0.75rem;
 }
 
@@ -86,7 +86,7 @@ input, textarea, select {
 
 /* Smooth text selection */
 ::selection {
-  @apply bg-accent-500 bg-opacity-30 text-neutral-900;
+  @apply bg-primary-200 text-primary-900;
 }
 
 /* Animations */

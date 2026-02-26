@@ -14,7 +14,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-50">
+    <main className="min-h-screen bg-neutral-50">
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div className="px-6 py-8 max-w-7xl mx-auto">
