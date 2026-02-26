@@ -106,36 +106,42 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Overview Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="card-retro p-6 bg-gradient-to-br from-primary-50 to-cream">
-          <div className="flex items-center gap-4">
-            <Clock className="text-primary-500" size={32} />
-            <div>
-              <p className="text-sm text-neutral-600 font-semibold">Timeline</p>
-              <p className="text-2xl font-serif">12 Months</p>
-              <p className="text-xs text-neutral-500">Mar 2026 → Mar 2027</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="card-retro bg-white">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-primary-50 rounded-lg">
+              <Clock className="text-primary-600" size={28} />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Timeline</p>
+              <p className="text-2xl font-semibold text-neutral-900 mt-1">12 Months</p>
+              <p className="text-sm text-neutral-600 mt-1">Mar 2026 → Mar 2027</p>
             </div>
           </div>
         </div>
 
-        <div className="card-retro p-6 bg-gradient-to-br from-accent-50 to-cream">
-          <div className="flex items-center gap-4">
-            <CheckCircle className="text-accent-500" size={32} />
-            <div>
-              <p className="text-sm text-neutral-600 font-semibold">Phases</p>
-              <p className="text-2xl font-serif">8 Total</p>
-              <p className="text-xs text-neutral-500">1 active, 7 planned</p>
+        <div className="card-retro bg-white">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-accent-50 rounded-lg">
+              <CheckCircle className="text-accent-600" size={28} />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Phases</p>
+              <p className="text-2xl font-semibold text-neutral-900 mt-1">8 Total</p>
+              <p className="text-sm text-neutral-600 mt-1">1 active, 7 planned</p>
             </div>
           </div>
         </div>
 
-        <div className="card-retro p-6 bg-gradient-to-br from-primary-50 to-cream">
-          <div className="flex items-center gap-4">
-            <AlertCircle className="text-primary-500" size={32} />
-            <div>
-              <p className="text-sm text-neutral-600 font-semibold">Blockers</p>
-              <p className="text-2xl font-serif">3 Critical</p>
-              <p className="text-xs text-neutral-500">Need resolution now</p>
+        <div className="card-retro bg-white">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-primary-50 rounded-lg">
+              <AlertCircle className="text-primary-600" size={28} />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Blockers</p>
+              <p className="text-2xl font-semibold text-neutral-900 mt-1">3 Critical</p>
+              <p className="text-sm text-neutral-600 mt-1">Need resolution now</p>
             </div>
           </div>
         </div>
