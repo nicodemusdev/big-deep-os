@@ -9,3 +9,8 @@ dist
 .env.*.local
 .DS_Store
 .vercel
+
+# Google credentials — NEVER commit these
+credentials.json
+*-credentials.json
+*-service-account.json

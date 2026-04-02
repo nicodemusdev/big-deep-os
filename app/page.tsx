@@ -11,6 +11,7 @@ import Cadence from "./components/Cadence";
 import Research from "./components/Research";
 import DDMPlaybook from "./components/DDMPlaybook";
 import Campaigns from "./components/Campaigns";
+import CalendarAdmin from "./components/CalendarAdmin";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("ddm");
@@ -24,6 +25,7 @@ export default function Home() {
           {activeTab === "dashboard" && <Dashboard />}
           {activeTab === "ddm" && <DDMPlaybook />}
           {activeTab === "campaigns" && <Campaigns />}
+          {activeTab === "calendar" && <CalendarAdmin />}
           {activeTab === "timeline" && <Timeline />}
           {activeTab === "tasks" && <Tasks />}
           {activeTab === "partners" && <Partners />}

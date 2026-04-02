@@ -18,7 +18,8 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "date-fns": "^3.0.0",
-    "lucide-react": "^0.378.0"
+    "lucide-react": "^0.378.0",
+    "googleapis": "^144.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

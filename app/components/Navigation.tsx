@@ -9,6 +9,7 @@ const navItems = [
   { id: "dashboard", label: "Dashboard", icon: Home, highlight: false },
   { id: "ddm", label: "DDM Playbook", icon: Brain, highlight: true },
   { id: "campaigns", label: "Campaigns", icon: DollarSign, highlight: true },
+  { id: "calendar", label: "Calendar", icon: Calendar, highlight: true },
   { id: "timeline", label: "Timeline", icon: Calendar, highlight: false },
   { id: "tasks", label: "Tasks", icon: CheckSquare, highlight: false },
   { id: "partners", label: "Partners", icon: Users, highlight: false },
