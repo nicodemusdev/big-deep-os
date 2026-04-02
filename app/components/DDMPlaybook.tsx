@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Brain, BarChart2, Target, Eye, Rocket, TrendingUp,
   DollarSign, LineChart, Users, GitBranch, Calendar,
@@ -708,6 +708,182 @@ export default function DDMPlaybook() {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [textInputs, setTextInputs] = useState<Record<string, string>>({});
   const [guideOpen, setGuideOpen] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saved">("idle");
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Load saved worksheet data from localStorage on mount
+  useEffect(() => {
+    const savedChecked = localStorage.getItem("bigdeep-ddm-checked");
+    const savedInputs  = localStorage.getItem("bigdeep-ddm-inputs");
+    if (savedChecked) setChecked(JSON.parse(savedChecked));
+    if (savedInputs)  setTextInputs(JSON.parse(savedInputs));
+  }, []);
+
+  // Auto-save checkboxes to localStorage
+  useEffect(() => {
+    localStorage.setItem("bigdeep-ddm-checked", JSON.stringify(checked));
+    flashSaved();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked]);
+
+  // Auto-save text inputs to localStorage
+  useEffect(() => {
+    localStorage.setItem("bigdeep-ddm-inputs", JSON.stringify(textInputs));
+    flashSaved();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textInputs]);
+
+  function flashSaved() {
+    setSaveStatus("saved");
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => setSaveStatus("idle"), 2000);
+  }
+
+  function clearWorksheet(sectionId: string) {
+    const section = sections.find(s => s.id === sectionId);
+    if (!section) return;
+    const checkIds = (section.worksheet.checks || []).map(c => c.id);
+    const inputIds = (section.worksheet.inputs || []).map(i => i.id);
+    setChecked(prev => {
+      const next = { ...prev };
+      checkIds.forEach(id => delete next[id]);
+      return next;
+    });
+    setTextInputs(prev => {
+      const next = { ...prev };
+      inputIds.forEach(id => delete next[id]);
+      return next;
+    });
+  }
+
+  // ── Campaign save / load / print ──────────────────────────────────────────
+  const [campaignName,    setCampaignName]    = useState("April Launch 2026");
+  const [savedBy,         setSavedBy]         = useState("Jordan");
+  const [showSaveModal,   setShowSaveModal]   = useState(false);
+  const [showLoadModal,   setShowLoadModal]   = useState(false);
+  const [isSaving,        setIsSaving]        = useState(false);
+  const [saveError,       setSaveError]       = useState<string | null>(null);
+  const [savedCampaigns,  setSavedCampaigns]  = useState<{ title: string; campaign: string; savedAt: string }[]>([]);
+  const [loadingCampaigns,setLoadingCampaigns]= useState(false);
+
+  async function saveToSheets() {
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      // Build flat field list from all sections
+      const fields: {
+        sectionId: string; sectionLabel: string;
+        fieldId: string; fieldLabel: string;
+        fieldType: "check" | "input"; value: string;
+      }[] = [];
+
+      for (const s of sections) {
+        for (const c of s.worksheet.checks || []) {
+          fields.push({
+            sectionId: s.id, sectionLabel: s.label,
+            fieldId: c.id, fieldLabel: c.label,
+            fieldType: "check", value: String(!!checked[c.id]),
+          });
+        }
+        for (const inp of s.worksheet.inputs || []) {
+          const val = textInputs[inp.id]?.trim();
+          if (val) {
+            fields.push({
+              sectionId: s.id, sectionLabel: s.label,
+              fieldId: inp.id, fieldLabel: inp.label,
+              fieldType: "input", value: val,
+            });
+          }
+        }
+      }
+
+      const res = await fetch("/api/worksheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ campaignName, savedBy, fields }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+
+      setShowSaveModal(false);
+      showToast("Worksheet saved to Google Sheets ✓");
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : "Save failed");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function loadCampaignList() {
+    setLoadingCampaigns(true);
+    try {
+      const res  = await fetch("/api/worksheets");
+      const data = await res.json();
+      setSavedCampaigns(data);
+    } catch {
+      setSavedCampaigns([]);
+    } finally {
+      setLoadingCampaigns(false);
+    }
+  }
+
+  function printWorksheet() {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    const allFields: { sectionLabel: string; fieldLabel: string; type: "check" | "input"; value: string }[] = [];
+    for (const s of sections) {
+      for (const c of s.worksheet.checks || []) {
+        allFields.push({ sectionLabel: s.label, fieldLabel: c.label, type: "check", value: checked[c.id] ? "✅" : "☐" });
+      }
+      for (const inp of s.worksheet.inputs || []) {
+        allFields.push({ sectionLabel: s.label, fieldLabel: inp.label, type: "input", value: textInputs[inp.id] || "" });
+      }
+    }
+
+    let lastSection = "";
+    let rows = "";
+    for (const f of allFields) {
+      if (f.type === "input" && !f.value) continue;
+      if (f.sectionLabel !== lastSection) {
+        rows += `<tr><td colspan="3" style="background:#f0f7ff;font-weight:bold;padding:8px 10px;font-size:13px;border-top:2px solid #0ea5e9">${f.sectionLabel}</td></tr>`;
+        lastSection = f.sectionLabel;
+      }
+      rows += `<tr>
+        <td style="padding:6px 10px;font-size:11px;color:#666;vertical-align:top">${f.type === "check" ? "Checkbox" : "Response"}</td>
+        <td style="padding:6px 10px;font-size:12px;font-weight:500;vertical-align:top;max-width:280px">${f.fieldLabel}</td>
+        <td style="padding:6px 10px;font-size:12px;vertical-align:top;max-width:320px;color:${f.type === "check" ? "#16a34a" : "#111"}">${f.value || '<span style="color:#aaa">—</span>'}</td>
+      </tr>`;
+    }
+
+    const now = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+    printWindow.document.write(`<!DOCTYPE html><html><head><title>${campaignName} — Campaign Worksheet</title>
+    <style>
+      body { font-family: Georgia, serif; margin: 40px; color: #111; }
+      h1 { font-size: 22px; margin: 0 0 4px; color: #0c2340; }
+      h2 { font-size: 14px; font-weight: normal; color: #666; margin: 0 0 20px; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      td { border-bottom: 1px solid #eee; }
+      @media print { body { margin: 20px; } }
+    </style></head><body>
+    <h1>Big Deep OS — Campaign Worksheet</h1>
+    <h2>${campaignName} &nbsp;·&nbsp; Saved by ${savedBy} &nbsp;·&nbsp; ${now}</h2>
+    <table>${rows}</table>
+    </body></html>`);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  }
+
+  // ── Shared toast (re-used from save indicator) ─────────────────────────────
+  const [toast, setToast] = useState<string | null>(null);
+  function showToast(msg: string) {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  }
 
   const toggleCheck = (id: string) => {
     setChecked(prev => ({ ...prev, [id]: !prev[id] }));
@@ -740,9 +916,85 @@ export default function DDMPlaybook() {
 
   return (
     <div className="space-y-6">
+      {/* Toast */}
+      {toast && (
+        <div className="fixed top-4 right-4 z-50 bg-green-600 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
+          <CheckCircle size={15} /> {toast}
+        </div>
+      )}
+
+      {/* Save Modal */}
+      {showSaveModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
+            <h3 className="font-bold text-lg text-neutral-900 mb-4">Save Campaign Worksheet</h3>
+            <div className="space-y-3 mb-5">
+              <div>
+                <label className="text-xs font-bold text-neutral-500 uppercase block mb-1">Campaign Name</label>
+                <input
+                  className="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
+                  value={campaignName}
+                  onChange={e => setCampaignName(e.target.value)}
+                  placeholder="e.g. April Launch 2026"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-neutral-500 uppercase block mb-1">Saved By</label>
+                <input
+                  className="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400"
+                  value={savedBy}
+                  onChange={e => setSavedBy(e.target.value)}
+                  placeholder="e.g. Jordan"
+                />
+              </div>
+              <p className="text-xs text-neutral-400">Saves all filled sections to Google Sheets as a new tab named &ldquo;{campaignName}&rdquo;. Past saves are preserved.</p>
+              {saveError && <p className="text-xs text-red-600 bg-red-50 p-2 rounded-lg">{saveError}</p>}
+            </div>
+            <div className="flex gap-2">
+              <button onClick={saveToSheets} disabled={isSaving || !campaignName}
+                className="flex-1 bg-primary-500 text-white font-semibold text-sm py-2.5 rounded-xl disabled:opacity-50 hover:bg-primary-600 transition-colors">
+                {isSaving ? "Saving to Google Sheets…" : "Save to Google Sheets"}
+              </button>
+              <button onClick={() => { setShowSaveModal(false); setSaveError(null); }}
+                className="px-4 py-2.5 border border-neutral-200 rounded-xl text-sm text-neutral-600 hover:bg-neutral-50 transition-colors">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Load Modal */}
+      {showLoadModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
+            <h3 className="font-bold text-lg text-neutral-900 mb-4">Saved Campaign Worksheets</h3>
+            {loadingCampaigns ? (
+              <p className="text-sm text-neutral-400 text-center py-6">Loading from Google Sheets…</p>
+            ) : savedCampaigns.length === 0 ? (
+              <p className="text-sm text-neutral-400 text-center py-6">No saved campaigns yet. Fill out worksheets and save your first one.</p>
+            ) : (
+              <div className="space-y-2 max-h-72 overflow-y-auto mb-4">
+                {savedCampaigns.map((c, i) => (
+                  <div key={i} className="border border-neutral-200 rounded-xl p-3">
+                    <p className="font-semibold text-sm text-neutral-900">{c.campaign}</p>
+                    <p className="text-xs text-neutral-400 mt-0.5">{c.savedAt}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="text-xs text-neutral-400 mb-3">Open the Google Sheet to view or print any saved campaign.</p>
+            <button onClick={() => setShowLoadModal(false)}
+              className="w-full py-2.5 border border-neutral-200 rounded-xl text-sm text-neutral-600 hover:bg-neutral-50 transition-colors">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div>
-        <div className="flex items-start justify-between mb-2">
+        <div className="flex items-start justify-between mb-2 gap-4">
           <div>
             <h2 className="text-3xl font-serif text-neutral-900 flex items-center gap-2">
               <Brain size={32} className="text-primary-500" />
@@ -750,9 +1002,32 @@ export default function DDMPlaybook() {
             </h2>
             <p className="text-neutral-500 text-sm mt-1">Interactive Marketing Director&apos;s Field Guide — Work through each section</p>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold text-primary-500">{overallProgress}%</div>
-            <div className="text-xs text-neutral-500">Overall Complete</div>
+          <div className="flex flex-col items-end gap-2 flex-shrink-0">
+            <div className="text-right">
+              <div className="text-2xl font-bold text-primary-500">{overallProgress}%</div>
+              <div className="text-xs text-neutral-500">Overall Complete</div>
+            </div>
+            {/* Action buttons */}
+            <div className="flex gap-1.5">
+              <button
+                onClick={printWorksheet}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors flex items-center gap-1"
+              >
+                🖨️ Print
+              </button>
+              <button
+                onClick={() => { loadCampaignList(); setShowLoadModal(true); }}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors flex items-center gap-1"
+              >
+                📂 Load
+              </button>
+              <button
+                onClick={() => { setSaveError(null); setShowSaveModal(true); }}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-colors flex items-center gap-1"
+              >
+                💾 Save Campaign
+              </button>
+            </div>
           </div>
         </div>
         {/* Overall progress bar */}
@@ -867,9 +1142,26 @@ export default function DDMPlaybook() {
             {/* WORKSHEET PANEL */}
             {activePanel === "worksheet" && (
               <div className="space-y-5">
-                <p className="text-sm text-neutral-600 italic border-l-4 border-primary-300 pl-3">
-                  {currentSection.worksheet.intro}
-                </p>
+                {/* Worksheet header row */}
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-sm text-neutral-600 italic border-l-4 border-primary-300 pl-3 flex-1">
+                    {currentSection.worksheet.intro}
+                  </p>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {saveStatus === "saved" && (
+                      <span className="text-xs text-green-600 font-medium flex items-center gap-1">
+                        <CheckCircle size={12} /> Saved
+                      </span>
+                    )}
+                    <button
+                      onClick={() => clearWorksheet(currentSection.id)}
+                      className="text-xs text-neutral-400 hover:text-red-500 transition-colors px-2 py-1 rounded border border-neutral-200 hover:border-red-200"
+                      title="Clear this worksheet"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </div>
 
                 {/* Checklist */}
                 {currentSection.worksheet.checks && currentSection.worksheet.checks.length > 0 && (

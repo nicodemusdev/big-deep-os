@@ -1,235 +1,388 @@
 "use client";
 
-import { CheckSquare, AlertCircle, CheckCircle, Circle } from "lucide-react";
-import { useState } from "react";
+import { CheckSquare, CheckCircle, Circle } from "lucide-react";
+import { useState, useEffect } from "react";
+
+type Task = {
+  id: string;
+  phase: number;
+  title: string;
+  owner: string;
+  due: string;
+  priority: "CRITICAL" | "HIGH" | "MEDIUM";
+  description: string;
+};
+
+const tasks: Task[] = [
+  // ── THIS WEEK — Urgent pre-launch ──────────────────────────────────────────
+  {
+    id: "t-mv1-concept",
+    phase: 0,
+    title: "Music Video 1 — decide concept + crew",
+    owner: "Jordan",
+    due: "This week 🔴",
+    priority: "CRITICAL",
+    description: "Mid-May Eclipse drop requires an April shoot. No concept, no crew, no location decided yet. Blocking everything downstream.",
+  },
+  {
+    id: "t-branding",
+    phase: 0,
+    title: "Lock @SarahDavida branding package",
+    owner: "Jordan → Sarah",
+    due: "Before Apr 8",
+    priority: "CRITICAL",
+    description: "Logo, color system, type system must be final before the Apr 8 teaser image posts go live.",
+  },
+  {
+    id: "t-pixel",
+    phase: 0,
+    title: "Meta Pixel live on BigDeep.Band",
+    owner: "Jordan",
+    due: "Before Apr 9 🔴",
+    priority: "CRITICAL",
+    description: "L4LM article drives press traffic Apr 9. Pixel must be installed BEFORE that or we lose the data forever. No second chance.",
+  },
+  {
+    id: "t-email-form",
+    phase: 0,
+    title: "Email capture form live on BigDeep.Band",
+    owner: "Jordan",
+    due: "Before Apr 9 🔴",
+    priority: "CRITICAL",
+    description: "Same window as Meta Pixel — L4LM drives traffic Apr 9. Email list starts here.",
+  },
+  {
+    id: "t-ad-build",
+    phase: 0,
+    title: "Build Meta ad campaign in Ads Manager",
+    owner: "Jordan",
+    due: "Before Apr 15",
+    priority: "HIGH",
+    description: "Build the Video Views campaign now (Inklines video as creative, jam scene targeting). Do NOT launch — just have it ready to go the moment Apr 16 hits.",
+  },
+  {
+    id: "t-reveal-caption",
+    phase: 0,
+    title: "Write + lock April 16 reveal caption",
+    owner: "Jordan",
+    due: "Before Apr 15",
+    priority: "HIGH",
+    description: "Write the reveal post caption before reveal day. No last-minute copy on the biggest moment. Write it, sleep on it, lock it.",
+  },
+  {
+    id: "t-apr21-shotlist",
+    phase: 0,
+    title: "April 21 shot list finalized",
+    owner: "Jordan + Video crew",
+    due: "Before Apr 21",
+    priority: "HIGH",
+    description: "6-camera shoot requires roles assigned to each camera in advance. Coordinate with full video crew. Assign photographers their focus areas.",
+  },
+  {
+    id: "t-telegram-seed",
+    phase: 0,
+    title: "Seed Telegram link to warm audience",
+    owner: "Jordan",
+    due: "This week",
+    priority: "MEDIUM",
+    description: "Start building the VIP community before the reveal. Send the link to Spafford fans, close contacts, warm audience now.",
+  },
+
+  // ── Apr 8–15 — Silent Wall ─────────────────────────────────────────────────
+  {
+    id: "t-apr8-teaser",
+    phase: 1,
+    title: "Post teaser image to @BigDeepBand IG Feed",
+    owner: "Jordan",
+    due: "Apr 8",
+    priority: "CRITICAL",
+    description: "One image. Wall goes silent after this. Nothing else until April 16. Then archive this post the night of Apr 15.",
+  },
+  {
+    id: "t-apr9-stories",
+    phase: 1,
+    title: "Jordan + @BigDeepBand Stories go active",
+    owner: "Jordan",
+    due: "Apr 9 (L4LM drops)",
+    priority: "CRITICAL",
+    description: "Stories launch the moment L4LM article drops. Reshare immediately. Jordan personal + @BigDeepBand both active from this point daily.",
+  },
+  {
+    id: "t-apr9-tiktok",
+    phase: 1,
+    title: "TikTok sandbox begins — first post",
+    owner: "Jordan",
+    due: "Apr 9",
+    priority: "HIGH",
+    description: "First TikTok goes live Apr 9 — Eclipse teaser clip or backstory. 4-6x/week from here. Volume over perfection.",
+  },
+  {
+    id: "t-apr13-wook",
+    phase: 1,
+    title: "Wook+ YouTube interview drops — clip for TikTok",
+    owner: "Jordan",
+    due: "Apr 13",
+    priority: "HIGH",
+    description: "Confirm Wook+ published. Reshare to all Stories. Pull 30-60 sec clip for TikTok same day. Post link to Telegram.",
+  },
+  {
+    id: "t-apr15-jamfam",
+    phase: 1,
+    title: "JamFam IG Q&A — archive teaser image after",
+    owner: "Jordan",
+    due: "Apr 15",
+    priority: "HIGH",
+    description: "Answer JamFam IG questions live. Reshare to Stories. Archive the Apr 8 teaser image from the feed tonight — wall is blank for reveal tomorrow.",
+  },
+
+  // ── Apr 16 — Reveal Day ────────────────────────────────────────────────────
+  {
+    id: "t-apr16-reveal",
+    phase: 2,
+    title: "Post Inklines animated reveal video to IG Feed",
+    owner: "Jordan",
+    due: "Apr 16 — morning",
+    priority: "CRITICAL",
+    description: "This is THE moment. Post with locked caption. Tag @Inklines. All Stories coverage all day — reshare every reaction, every comment.",
+  },
+  {
+    id: "t-apr16-ad",
+    phase: 2,
+    title: "Launch Meta Video Views campaign",
+    owner: "Jordan",
+    due: "Apr 16 — within 1hr of post",
+    priority: "CRITICAL",
+    description: "$50-75 budget, Apr 16-22. Video Views objective. Inklines video as creative. Jam scene targeting. Launch within one hour of the reveal post going live.",
+  },
+  {
+    id: "t-apr16-tiktok",
+    phase: 2,
+    title: "Clip Inklines video for TikTok — post same day",
+    owner: "Jordan",
+    due: "Apr 16",
+    priority: "HIGH",
+    description: "Pull a 30-60 sec clip from Inklines video and post to TikTok same day as reveal. Strike while momentum is live.",
+  },
+  {
+    id: "t-apr16-telegram",
+    phase: 2,
+    title: "Push reveal to Telegram community",
+    owner: "Jordan",
+    due: "Apr 16",
+    priority: "HIGH",
+    description: "Message the Telegram community — they hear it here. Begin driving new followers to Telegram via Stories CTA.",
+  },
+
+  // ── Apr 17–22 — Launch Week ────────────────────────────────────────────────
+  {
+    id: "t-apr17-relix",
+    phase: 3,
+    title: "Reshare Relix Daily Dose + JamBase blast",
+    owner: "Jordan",
+    due: "Apr 17",
+    priority: "CRITICAL",
+    description: "Relix Daily Dose is the biggest credibility stamp. Reshare to all Stories the moment it drops. Same for JamBase email blast mention.",
+  },
+  {
+    id: "t-apr20-carousel",
+    phase: 3,
+    title: "Post Meet Big Deep polaroid carousel",
+    owner: "Jordan",
+    due: "Apr 20",
+    priority: "HIGH",
+    description: "Polaroid-style carousel introducing each band member. Timed with JamBase interview publish. This is the band's formal introduction to the world.",
+  },
+  {
+    id: "t-apr23-ad",
+    phase: 3,
+    title: "Transition to Profile Visit ad campaign",
+    owner: "Jordan",
+    due: "Apr 23",
+    priority: "HIGH",
+    description: "Video Views campaign ends Apr 22. Launch Profile Visit campaign Apr 23 ($30-40, run through Apr 30). Targeting: people who viewed the Inklines video.",
+  },
+  {
+    id: "t-apr21-show",
+    phase: 3,
+    title: "April 21 — The Show Before The Show",
+    owner: "Full team",
+    due: "Apr 21",
+    priority: "CRITICAL",
+    description: "6-cam video crew, 3 photographers, 60-70 guests. Capture everything. Assign camera roles before arrival. Pull TikTok clips same night if possible.",
+  },
+
+  // ── May — Eclipse Single ───────────────────────────────────────────────────
+  {
+    id: "t-eclipse-distro",
+    phase: 4,
+    title: "Submit Eclipse to DistroKid for distribution",
+    owner: "Jordan",
+    due: "3 weeks before drop",
+    priority: "CRITICAL",
+    description: "DistroKid requires ~2 week processing. Submit Eclipse at least 3 weeks before mid-May drop date to ensure Spotify/Apple Music are live on release day.",
+  },
+  {
+    id: "t-eclipse-spotify",
+    phase: 4,
+    title: "Pitch Eclipse to Spotify editorial",
+    owner: "Jordan",
+    due: "7 days before release",
+    priority: "HIGH",
+    description: "Spotify for Artists editorial pitch window opens 7 days before release. Pitch Eclipse for Fresh Finds, New Music Friday, or genre playlists. Write the pitch in advance.",
+  },
+  {
+    id: "t-presave-campaign",
+    phase: 4,
+    title: "Pre-save campaign + Traffic ad",
+    owner: "Jordan",
+    due: "3 weeks before drop",
+    priority: "HIGH",
+    description: "Build pre-save landing page. Launch $30 Traffic ad driving to pre-save link. Push pre-save via Telegram community first.",
+  },
+  {
+    id: "t-mv1-shoot",
+    phase: 4,
+    title: "Music Video 1 shoot complete",
+    owner: "Jordan + crew",
+    due: "April (before May drop)",
+    priority: "CRITICAL",
+    description: "Must be shot and in edit before May. If concept isn't decided this week, the timeline collapses. Deliver: YouTube cut, IG Reel cut, TikTok cut, BTS footage.",
+  },
+];
+
+const phaseConfig: Record<number, { label: string; color: string; bg: string; border: string }> = {
+  0: { label: "🔴 This Week — Pre-Launch (Before Apr 8)", color: "text-red-700",    bg: "bg-red-50",    border: "border-red-300" },
+  1: { label: "📵 Apr 8–15 — Silent Wall",               color: "text-yellow-700", bg: "bg-yellow-50", border: "border-yellow-300" },
+  2: { label: "🎸 Apr 16 — Reveal Day",                  color: "text-accent-700", bg: "bg-accent-50", border: "border-accent-300" },
+  3: { label: "🚀 Apr 17–22 — Launch Week",              color: "text-primary-700",bg: "bg-primary-50",border: "border-primary-300" },
+  4: { label: "🎵 May — Eclipse Single Drop",            color: "text-green-700",  bg: "bg-green-50",  border: "border-green-300" },
+};
+
+const priorityStyle: Record<string, string> = {
+  CRITICAL: "bg-red-100 text-red-700 border border-red-200",
+  HIGH:     "bg-orange-100 text-orange-700 border border-orange-200",
+  MEDIUM:   "bg-neutral-100 text-neutral-600 border border-neutral-200",
+};
 
 export default function Tasks() {
-  const [filter, setFilter] = useState("all");
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const [filter, setFilter]   = useState("all");
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
 
-  const toggleTask = (idx: number) => {
-    setChecked(prev => ({ ...prev, [idx]: !prev[idx] }));
+  // Persist to localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("bigdeep-tasks-checked");
+    if (saved) setChecked(JSON.parse(saved));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("bigdeep-tasks-checked", JSON.stringify(checked));
+  }, [checked]);
+
+  const toggleTask = (id: string) => {
+    setChecked(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const doneCount = Object.values(checked).filter(Boolean).length;
-
-  const tasks = [
-    {
-      phase: 0,
-      title: "Lock L4LM publish date (March 28)",
-      owner: "Jordan",
-      due: "ASAP",
-      priority: "CRITICAL",
-      status: "pending",
-      description: "Confirm with L4LM contact that March 28 is locked for feature publish",
-    },
-    {
-      phase: 0,
-      title: "Organize content inventory",
-      owner: "Team",
-      due: "Mar 14",
-      priority: "CRITICAL",
-      status: "pending",
-      description: "Tag and organize all Inception, Utopia, and Inkline footage for platform use",
-    },
-    {
-      phase: 0,
-      title: "Claim all social handles",
-      owner: "Jordan",
-      due: "Mar 27",
-      priority: "HIGH",
-      status: "pending",
-      description: "Instagram, TikTok, YouTube, X, Spotify, Apple Music, Facebook",
-    },
-    {
-      phase: 0,
-      title: "Professional photo shoot",
-      owner: "Photographer",
-      due: "Mar 12",
-      priority: "HIGH",
-      status: "pending",
-      description: "Band photos, Jordan headshots, studio moments (all formats)",
-    },
-    {
-      phase: 0,
-      title: "Finalize mix/master timeline",
-      owner: "Producer",
-      due: "ASAP",
-      priority: "CRITICAL",
-      status: "pending",
-      description: "Confirm dates for Singles 1 (Apr 20), 2 (May 18), 3 (Jun 15)",
-    },
-    {
-      phase: 0,
-      title: "Write brand bios",
-      owner: "Jordan",
-      due: "This week",
-      priority: "HIGH",
-      status: "pending",
-      description: "Short (100w), medium (300w), long (500+w) versions for partners",
-    },
-    {
-      phase: 1,
-      title: "Draft Phase 1 posts",
-      owner: "Jordan",
-      due: "Mar 27",
-      priority: "HIGH",
-      status: "pending",
-      description: "First week of posts ready to go live March 28 (story + intro)",
-    },
-    {
-      phase: 1,
-      title: "Set up posting infrastructure",
-      owner: "Jordan",
-      due: "Mar 20",
-      priority: "MEDIUM",
-      status: "pending",
-      description: "Buffer/Later/Metricool/native scheduling tool - ready to use",
-    },
-    {
-      phase: 2,
-      title: "Brand reveal content",
-      owner: "Inkline",
-      due: "Early April",
-      priority: "HIGH",
-      status: "pending",
-      description: "Band member introductions, brand identity videos, full band narrative",
-    },
-    {
-      phase: 3,
-      title: "Single 1 music video shoot",
-      owner: "Inkline",
-      due: "Mar 31",
-      priority: "CRITICAL",
-      status: "pending",
-      description: "Complete and export all platform versions (YouTube, IG, TikTok)",
-    },
-    {
-      phase: 3,
-      title: "April 21 in-studio live shoot",
-      owner: "Inkline",
-      due: "Apr 21",
-      priority: "HIGH",
-      status: "pending",
-      description: "Record live-in-studio versions for all 3 singles (or at least Single 1)",
-    },
-    {
-      phase: 3,
-      title: "DSP account setup",
-      owner: "Team",
-      due: "Apr 1",
-      priority: "MEDIUM",
-      status: "pending",
-      description: "Spotify for Artists, Apple Music, Amazon, YouTube Music creator accounts",
-    },
-  ];
-
-  const filteredTasks = filter === "all" ? tasks : tasks.filter((t) => t.priority === filter);
-
-  const priorityColor = (priority: string) => {
-    switch (priority) {
-      case "CRITICAL":
-        return "bg-primary-500 text-white";
-      case "HIGH":
-        return "bg-accent-500 text-neutral-900";
-      default:
-        return "bg-neutral-300 text-neutral-900";
-    }
-  };
+  const filtered   = filter === "all" ? tasks : tasks.filter(t => t.priority === filter);
+  const doneCount  = tasks.filter(t => checked[t.id]).length;
+  const pct        = Math.round((doneCount / tasks.length) * 100);
 
   return (
     <div className="space-y-8">
-      <div className="flex items-start justify-between">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-serif text-neutral-900 mb-2 flex items-center gap-2">
-            <CheckSquare size={32} className="text-primary-500" />
+          <h2 className="text-3xl font-serif text-neutral-900 mb-1 flex items-center gap-2">
+            <CheckSquare size={30} className="text-primary-500" />
             Task Tracker
           </h2>
-          <p className="text-neutral-600">All tasks organized by phase and priority — check off as you complete them</p>
+          <p className="text-neutral-500 text-sm">Click any task to check it off. Progress saves automatically.</p>
         </div>
-        <div className="text-right">
-          <p className="text-2xl font-bold text-primary-500">{doneCount}/{tasks.length}</p>
-          <p className="text-xs text-neutral-400">tasks complete</p>
-          <div className="w-32 bg-neutral-100 rounded-full h-2 mt-1">
-            <div className="bg-primary-500 h-2 rounded-full transition-all" style={{ width: `${(doneCount / tasks.length) * 100}%` }} />
+        <div className="text-right flex-shrink-0">
+          <p className="text-2xl font-bold text-primary-500">{doneCount}<span className="text-neutral-300">/{tasks.length}</span></p>
+          <p className="text-xs text-neutral-400 mb-1">{pct}% complete</p>
+          <div className="w-28 bg-neutral-100 rounded-full h-2">
+            <div
+              className="bg-primary-500 h-2 rounded-full transition-all"
+              style={{ width: `${pct}%` }}
+            />
           </div>
         </div>
       </div>
 
       {/* Filter */}
       <div className="flex gap-2 flex-wrap">
-        {["all", "CRITICAL", "HIGH", "MEDIUM"].map((f) => (
+        {(["all", "CRITICAL", "HIGH", "MEDIUM"] as const).map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-sm border-2 font-semibold transition-all ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${
               filter === f
-                ? "bg-primary-500 border-primary-500 text-white shadow-retro"
-                : "bg-white border-neutral-900 text-neutral-900 hover:bg-cream"
+                ? "bg-neutral-900 text-white border-neutral-900"
+                : "bg-white border-neutral-200 text-neutral-600 hover:border-neutral-400"
             }`}
           >
             {f === "all" ? "All Tasks" : f}
+            <span className="ml-1.5 opacity-60">
+              {f === "all"
+                ? tasks.length
+                : tasks.filter(t => t.priority === f).length}
+            </span>
           </button>
         ))}
       </div>
 
       {/* Tasks by Phase */}
-      {[0, 1, 2, 3].map((phase) => {
-        const phaseTasks = filteredTasks.filter((t) => t.phase === phase);
+      {([0, 1, 2, 3, 4] as const).map(phase => {
+        const phaseTasks = filtered.filter(t => t.phase === phase);
         if (phaseTasks.length === 0) return null;
-
-        const phaseNames: Record<number, string> = {
-          0: "Phase 0: Pre-Launch (Now → Apr 8)",
-          1: "Phase 1: The Story (Apr 9)",
-          2: "Phase 2: Brand Reveal (Apr 16)",
-          3: "Phase 3: First Single (Mid-May)",
-        };
-
-        // Get global task indices for this phase
-        const phaseTaskIndices = tasks
-          .map((t, i) => ({ t, i }))
-          .filter(({ t }) => t.phase === phase);
+        const cfg = phaseConfig[phase];
 
         return (
           <section key={phase}>
-            <h3 className="text-xl font-serif font-bold text-neutral-900 mb-4 pb-2 border-b-2 border-primary-500">
-              {phaseNames[phase]}
-            </h3>
-            <div className="space-y-3">
-              {phaseTaskIndices
-                .filter(({ t }) => filter === "all" || t.priority === filter)
-                .map(({ t: task, i: globalIdx }) => {
-                  const isDone = !!checked[globalIdx];
-                  return (
-                    <div
-                      key={globalIdx}
-                      className={`card-retro p-4 transition-all cursor-pointer select-none ${isDone ? "opacity-60 bg-green-50 border-green-200" : "hover:shadow-retro-lg"}`}
-                      onClick={() => toggleTask(globalIdx)}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5">
-                          {isDone
-                            ? <CheckCircle size={20} className="text-green-500" />
-                            : <Circle size={20} className="text-neutral-300" />
-                          }
+            <div className={`rounded-xl px-4 py-2.5 mb-3 border ${cfg.bg} ${cfg.border}`}>
+              <h3 className={`font-bold text-sm ${cfg.color}`}>{cfg.label}</h3>
+            </div>
+            <div className="space-y-2">
+              {phaseTasks.map(task => {
+                const done = !!checked[task.id];
+                return (
+                  <div
+                    key={task.id}
+                    onClick={() => toggleTask(task.id)}
+                    className={`rounded-xl border p-4 cursor-pointer select-none transition-all ${
+                      done
+                        ? "bg-green-50 border-green-200 opacity-60"
+                        : "bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-sm"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-0.5">
+                        {done
+                          ? <CheckCircle size={18} className="text-green-500" />
+                          : <Circle size={18} className="text-neutral-300" />
+                        }
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-3 mb-1">
+                          <h4 className={`font-semibold text-sm ${done ? "line-through text-neutral-400" : "text-neutral-900"}`}>
+                            {task.title}
+                          </h4>
+                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${priorityStyle[task.priority]}`}>
+                            {task.priority}
+                          </span>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-4 mb-1">
-                            <h4 className={`font-semibold ${isDone ? "line-through text-neutral-400" : "text-neutral-900"}`}>{task.title}</h4>
-                            <span className={`badge-retro ${priorityColor(task.priority)} whitespace-nowrap flex-shrink-0`}>
-                              {task.priority}
-                            </span>
-                          </div>
-                          <p className={`text-sm mb-2 ${isDone ? "text-neutral-400" : "text-neutral-700"}`}>{task.description}</p>
-                          <div className="flex items-center justify-between text-xs text-neutral-500">
-                            <span>Owner: <strong>{task.owner}</strong></span>
-                            <span>Due: <strong>{task.due}</strong></span>
-                          </div>
+                        <p className={`text-xs mb-2 leading-relaxed ${done ? "text-neutral-400" : "text-neutral-600"}`}>
+                          {task.description}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-neutral-400">
+                          <span>Owner: <strong className="text-neutral-600">{task.owner}</strong></span>
+                          <span>Due: <strong className="text-neutral-600">{task.due}</strong></span>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                );
+              })}
             </div>
           </section>
         );

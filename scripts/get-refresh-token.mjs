@@ -11,7 +11,10 @@ import { readFileSync } from "fs";
 import { createInterface } from "readline";
 import { google } from "googleapis";
 
-const SCOPES = ["https://www.googleapis.com/auth/calendar"];
+const SCOPES = [
+  "https://www.googleapis.com/auth/calendar",
+  "https://www.googleapis.com/auth/spreadsheets",
+];
 
 // Load credentials JSON (the file you downloaded from Google Cloud Console)
 let credentials;
