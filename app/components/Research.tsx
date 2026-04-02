@@ -2,72 +2,146 @@
 
 import { BookOpen, ExternalLink } from "lucide-react";
 
+const pressContacts = [
+  {
+    name: "L4LM",
+    fullName: "Live For Live Music",
+    url: "https://liveforlivemusic.com",
+    status: "confirmed",
+    relationship: "First press — broke the Big Deep story",
+    coverage: "Apr 9: Interview drops. Apr 17: Follow-up article after reveal.",
+    notes: "First relationship. Jordan + Luke interviewed. Confirm article live Apr 9.",
+  },
+  {
+    name: "Wook+",
+    fullName: "Wook+",
+    url: "https://wookplus.com",
+    status: "confirmed",
+    relationship: "Exclusive YouTube interview",
+    coverage: "Apr 13: YouTube interview publishes.",
+    notes: "Pull 30-60 sec clip for TikTok day it drops. Reshare to Stories.",
+  },
+  {
+    name: "JamFam",
+    fullName: "JamFam Instagram",
+    url: "https://instagram.com/jamfam",
+    status: "confirmed",
+    relationship: "Jam scene community — IG Q&A",
+    coverage: "Apr 15: IG Q&A — last touchpoint before reveal.",
+    notes: "Jordan answers live. Reshare to all Stories. Archive Apr 8 teaser image that night.",
+  },
+  {
+    name: "Relix",
+    fullName: "Relix Magazine",
+    url: "https://relix.com",
+    status: "confirmed",
+    relationship: "Biggest credibility stamp in jam world",
+    coverage: "Apr 16: Stories coverage. Apr 17: Daily Dose headline feature.",
+    notes: "Reshare Daily Dose Apr 17. In-studio feature possible Summer/Fall.",
+  },
+  {
+    name: "JamBase",
+    fullName: "JamBase",
+    url: "https://jambase.com",
+    status: "confirmed",
+    relationship: "Long-term jam press home",
+    coverage: "Apr 17: Email blast to full list. Apr 20: Meet Big Deep interview.",
+    notes: "Post polaroid carousel Apr 20 timed with interview. Long-term relationship.",
+  },
+];
+
+const tools = [
+  {
+    category: "Website + Email",
+    items: [
+      { name: "BigDeep.Band", url: "https://bigdeep.band", note: "Primary site — must be live before Apr 9. Meta Pixel + email capture required.", status: "must be live" },
+      { name: "BigDeepBand.com", url: "https://bigdeepband.com", note: "Alt domain — redirect to BigDeep.Band.", status: "redirect" },
+      { name: "Email capture form", url: "", note: "Live on site before L4LM article drops Apr 9. L4LM drives press traffic here.", status: "urgent" },
+    ],
+  },
+  {
+    category: "Distribution + DSPs",
+    items: [
+      { name: "DistroKid", url: "https://distrokid.com", note: "Primary distributor for Eclipse + all future singles.", status: "confirmed" },
+      { name: "Spotify for Artists", url: "https://artists.spotify.com", note: "Editorial pitch window opens 7 days before release. Pitch Eclipse early.", status: "active" },
+      { name: "Apple Music for Artists", url: "https://artists.apple.com", note: "A-List picks, analytics.", status: "active" },
+    ],
+  },
+  {
+    category: "Paid Ads",
+    items: [
+      { name: "Meta Ads Manager", url: "https://adsmanager.facebook.com", note: "Campaign built before Apr 16 — NOT live until reveal. Video Views campaign (Inklines video) first.", status: "build now" },
+      { name: "Meta Pixel", url: "", note: "Must be installed on BigDeep.Band before Apr 9. Tracks press traffic from L4LM article.", status: "urgent" },
+    ],
+  },
+  {
+    category: "Community",
+    items: [
+      { name: "Telegram", url: "https://t.me/+fesIFdrjEqxkZmEx", note: "VIP community — grow post-reveal. Presale audience for Bearsville.", status: "live" },
+    ],
+  },
+  {
+    category: "Social Platforms",
+    items: [
+      { name: "Instagram @BigDeepBand", url: "https://instagram.com/BigDeepBand", note: "Feed silent Apr 8–15. Stories active Apr 9.", status: "claimed" },
+      { name: "TikTok @BigDeepBand", url: "https://tiktok.com/@BigDeepBand", note: "Sandbox active Apr 9. 4–6x/week.", status: "claimed" },
+      { name: "YouTube Big Deep", url: "https://youtube.com", note: "Wook+ Apr 13. Music Video 1 premiere TBD.", status: "claimed" },
+      { name: "Facebook @BigDeepBand", url: "https://facebook.com/BigDeepBand", note: "Auto cross-post from IG.", status: "claimed" },
+    ],
+  },
+];
+
+const openDecisions = [
+  {
+    title: "Music Video 1 — concept + crew",
+    priority: "🔴 This week",
+    note: "Mid-May Eclipse drop requires April shoot. No concept decided, no crew confirmed, no location locked. Blocking everything downstream.",
+    urgent: true,
+  },
+  {
+    title: "@SarahDavida branding package",
+    priority: "🔴 Before Apr 8",
+    note: "Branding package must be locked before the Apr 8 teaser image posts. Logo, colors, type system all needed.",
+    urgent: true,
+  },
+  {
+    title: "Meta Pixel + Email Form live on BigDeep.Band",
+    priority: "🔴 Before Apr 9",
+    note: "L4LM article drives press traffic Apr 9. If Pixel and email form aren't live, we lose that data forever.",
+    urgent: true,
+  },
+  {
+    title: "Meta Ad Campaign built in Ads Manager",
+    priority: "Before Apr 16",
+    note: "Campaign must be built and ready to launch the moment Inklines video goes live. Video Views objective, targeting jam scene audience.",
+    urgent: false,
+  },
+  {
+    title: "April 16 caption written + approved",
+    priority: "Before Apr 15",
+    note: "Write and lock the reveal caption before reveal day. No last-minute copy on the biggest moment.",
+    urgent: false,
+  },
+  {
+    title: "Bearsville Theatre — confirm August date",
+    priority: "Q2 2026",
+    note: "August is the goal. Sell out is non-negotiable. Booking conversation should start now.",
+    urgent: false,
+  },
+];
+
+const statusBadge: Record<string, string> = {
+  "must be live": "bg-red-100 text-red-700",
+  urgent: "bg-red-100 text-red-700",
+  "build now": "bg-orange-100 text-orange-700",
+  confirmed: "bg-green-100 text-green-700",
+  active: "bg-blue-100 text-blue-700",
+  claimed: "bg-primary-100 text-primary-700",
+  redirect: "bg-neutral-100 text-neutral-500",
+  live: "bg-green-100 text-green-700",
+};
+
 export default function Research() {
-  const resources = [
-    {
-      category: "Partner Contacts",
-      items: [
-        { title: "L4LM", contact: "[Name] - [Email] - [Phone]", note: "CRITICAL: Confirm Mar 28 date" },
-        { title: "JamBase", contact: "[Name] - [Email] - [Phone]", note: "Warm outreach by May 1" },
-        { title: "Relix", contact: "[Name] - [Email] - [Phone]", note: "Warm outreach by late April" },
-      ],
-    },
-    {
-      category: "DSP Resources",
-      items: [
-        { title: "Spotify for Artists", contact: "https://artists.spotify.com", note: "Editorial pitching, analytics" },
-        { title: "Apple Music for Artists", contact: "https://artists.apple.com", note: "A-List picks, analytics" },
-        { title: "TuneCore/DistroKid", contact: "Depends on distributor", note: "Playlist pitching, delivery" },
-      ],
-    },
-    {
-      category: "Brand Guidelines",
-      items: [
-        { title: "Logo Files", contact: "TBD", note: "Horizontal, vertical, icon variations" },
-        { title: "Color Palette", contact: "Warm primaries (rust, mustard, cream)", note: "40s/50s matchbook aesthetic" },
-        { title: "Typography", contact: "Georgia (serif) + System (sans)", note: "Retro elegance" },
-      ],
-    },
-    {
-      category: "Analytics & Tools",
-      items: [
-        { title: "Google Analytics", contact: "Set up for website/links", note: "Track L4LM traffic attribution" },
-        { title: "Linktree or Beacons", contact: "Single link to all platforms", note: "Bio link for all social platforms" },
-        { title: "Instagram Insights", contact: "Native app analytics", note: "Weekly engagement review" },
-      ],
-    },
-  ];
-
-  const guides = [
-    { title: "Markdown Plan Files", location: "/home/ubuntu/contxta-vault/big-deep/marketing/", note: "Source of truth for this dashboard" },
-    { title: "Content Calendar Template", location: "content-calendar.md", note: "12-month monthly themes, weekly guides" },
-    { title: "Singles Strategy", location: "singles-strategy.md", note: "Detailed rollout for Singles 1, 2, 3 with learning loops" },
-    { title: "Voice Principles", location: "strategy.md", note: "Authentic, community-first, emotional honesty" },
-  ];
-
-  const notes = [
-    {
-      title: "Content Inventory Status",
-      status: "TBD",
-      note: "Where is Inception/Utopia/Inkline footage? Is it backed up, organized, ready for transcode?",
-    },
-    {
-      title: "Creative Timeline",
-      status: "Confirm",
-      note: "Are April 20, May 18, June 15 singles release dates locked? When is mix/master actually done?",
-    },
-    {
-      title: "Social Media Operator",
-      status: "Assign",
-      note: "Daily TikTok posting, comment responses, metric reviews. Who owns this 10–15 hrs/week?",
-    },
-    {
-      title: "Budget",
-      status: "Define",
-      note: "Paid promotion? Professional photography? Merchandise? What's the marketing spend?",
-    },
-  ];
-
   return (
     <div className="space-y-8">
       <div>
@@ -75,36 +149,60 @@ export default function Research() {
           <BookOpen size={32} className="text-primary-500" />
           Research Hub
         </h2>
-        <p className="text-neutral-600">Partner contacts, DSP guides, brand resources, and reference materials</p>
+        <p className="text-neutral-500 text-sm">Press contacts, tools, links, and open decisions.</p>
       </div>
 
-      {/* Resources by Category */}
+      {/* Press Contacts */}
       <section>
-        <h3 className="text-2xl font-serif font-bold text-neutral-900 mb-4">Resource Library</h3>
-        <div className="space-y-6">
-          {resources.map((section, idx) => (
+        <h3 className="font-bold text-neutral-900 mb-4 text-lg">Press Contacts — All Confirmed</h3>
+        <div className="space-y-3">
+          {pressContacts.map((contact, idx) => (
+            <div key={idx} className="card-retro p-4">
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-bold text-neutral-900">{contact.name}</h4>
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">✓ {contact.status}</span>
+                    <a href={contact.url} target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-600">
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
+                  <p className="text-xs text-neutral-500 mt-0.5">{contact.relationship}</p>
+                </div>
+              </div>
+              <p className="text-sm text-neutral-700 mb-2">{contact.coverage}</p>
+              <div className="bg-primary-50 border-l-4 border-primary-300 pl-3 py-1.5 rounded-r-lg">
+                <p className="text-xs text-neutral-600 italic">{contact.notes}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Tools + Links */}
+      <section>
+        <h3 className="font-bold text-neutral-900 mb-4 text-lg">Tools + Links</h3>
+        <div className="space-y-5">
+          {tools.map((group, idx) => (
             <div key={idx}>
-              <h4 className="text-lg font-semibold text-primary-600 uppercase text-sm mb-3 pb-2 border-b-2 border-primary-500">
-                {section.category}
-              </h4>
+              <p className="text-xs font-bold text-neutral-500 uppercase tracking-wide mb-2">{group.category}</p>
               <div className="space-y-2">
-                {section.items.map((item, i) => (
-                  <div key={i} className="card-retro p-4">
-                    <div className="flex items-start justify-between gap-3 mb-1">
-                      <p className="font-semibold text-neutral-900">{item.title}</p>
-                      {item.contact.startsWith("http") && (
-                        <a
-                          href={item.contact}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary-500 hover:text-primary-700 flex-shrink-0"
-                        >
-                          <ExternalLink size={16} />
-                        </a>
-                      )}
+                {group.items.map((item, i) => (
+                  <div key={i} className="bg-white border border-neutral-200 rounded-xl p-3 flex items-start gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="font-semibold text-sm text-neutral-900">{item.name}</p>
+                        {item.url && (
+                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-600">
+                            <ExternalLink size={11} />
+                          </a>
+                        )}
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusBadge[item.status] || "bg-neutral-100 text-neutral-500"}`}>
+                          {item.status}
+                        </span>
+                      </div>
+                      <p className="text-xs text-neutral-500 mt-1">{item.note}</p>
                     </div>
-                    <p className="text-sm text-neutral-700 font-mono">{item.contact}</p>
-                    <p className="text-xs text-neutral-600 mt-1 italic">{item.note}</p>
                   </div>
                 ))}
               </div>
@@ -113,55 +211,47 @@ export default function Research() {
         </div>
       </section>
 
-      {/* Documentation */}
+      {/* Open Decisions */}
       <section>
-        <h3 className="text-2xl font-serif font-bold text-neutral-900 mb-4">Documentation</h3>
-        <div className="space-y-3">
-          {guides.map((guide, idx) => (
-            <div key={idx} className="card-retro p-4">
-              <h4 className="font-semibold text-neutral-900">{guide.title}</h4>
-              <p className="text-sm text-neutral-700 font-mono mt-1">{guide.location}</p>
-              <p className="text-sm text-neutral-600 mt-2">{guide.note}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Open Questions */}
-      <section>
-        <h3 className="text-2xl font-serif font-bold text-neutral-900 mb-4">Open Questions & Decisions</h3>
-        <div className="space-y-3">
-          {notes.map((note, idx) => (
-            <div key={idx} className="card-retro p-4 border-l-4 border-primary-500">
-              <div className="flex items-start justify-between gap-3 mb-2">
-                <h4 className="font-semibold text-neutral-900">{note.title}</h4>
-                <span className="badge-retro bg-primary-500 text-white text-xs whitespace-nowrap">
-                  {note.status}
-                </span>
+        <h3 className="font-bold text-neutral-900 mb-4 text-lg">Open Decisions</h3>
+        <div className="space-y-2">
+          {openDecisions.map((item, idx) => (
+            <div key={idx} className={`rounded-xl border p-4 flex items-start gap-3 ${item.urgent ? "bg-red-50 border-red-200" : "bg-white border-neutral-200"}`}>
+              <div className="w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 border-neutral-300" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <p className={`text-sm font-semibold ${item.urgent ? "text-red-800" : "text-neutral-800"}`}>{item.title}</p>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${item.urgent ? "bg-red-100 text-red-700" : "bg-neutral-100 text-neutral-500"}`}>
+                    {item.priority}
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-600">{item.note}</p>
               </div>
-              <p className="text-sm text-neutral-700">{note.note}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* How to Update This Dashboard */}
-      <section className="bg-neutral-900 text-cream rounded-sm border-2 border-neutral-900 p-6 shadow-retro">
-        <h3 className="text-xl font-serif font-bold mb-3">How to Update This Dashboard</h3>
+      {/* Reference */}
+      <div className="bg-neutral-900 text-white rounded-xl p-5">
+        <h3 className="font-bold mb-3 text-sm uppercase tracking-wide opacity-70">Key Reference Numbers</h3>
         <div className="space-y-2 text-sm">
-          <p>
-            This dashboard reads from the markdown files in your contxta-vault. To update:
-          </p>
-          <ol className="list-decimal list-inside space-y-1 ml-2">
-            <li>Edit the markdown files in <code className="bg-neutral-800 px-2 py-1 rounded">/big-deep/marketing/</code></li>
-            <li>Push changes to GitHub</li>
-            <li>Refresh the dashboard (it will pull the latest data)</li>
-          </ol>
-          <p className="mt-3 italic">
-            Currently, the dashboard is using static data. We can add real-time sync to markdown files later if needed.
-          </p>
+          {[
+            ["Band Reveal", "April 16, 2026"],
+            ["Eclipse Single Drop", "Mid-May 2026"],
+            ["First Show", "Bearsville Theatre — August 2026"],
+            ["Ad Budget — Launch", "$50–75 (Video Views, Apr 16-22)"],
+            ["Ad Budget — Profile", "$30–40 (Profile Visit, Apr 23-30)"],
+            ["Ad Budget — Pre-Save", "$30 (Traffic, 3 wks before Eclipse)"],
+            ["Telegram Community", "t.me/+fesIFdrjEqxkZmEx"],
+          ].map(([label, value], i) => (
+            <div key={i} className="flex gap-3">
+              <span className="text-accent-400 font-bold flex-shrink-0 w-32">{label}</span>
+              <span className="text-neutral-300 font-mono">{value}</span>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }
