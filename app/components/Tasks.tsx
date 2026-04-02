@@ -1,10 +1,17 @@
 "use client";
 
-import { CheckSquare, AlertCircle } from "lucide-react";
+import { CheckSquare, AlertCircle, CheckCircle, Circle } from "lucide-react";
 import { useState } from "react";
 
 export default function Tasks() {
   const [filter, setFilter] = useState("all");
+  const [checked, setChecked] = useState<Record<number, boolean>>({});
+
+  const toggleTask = (idx: number) => {
+    setChecked(prev => ({ ...prev, [idx]: !prev[idx] }));
+  };
+
+  const doneCount = Object.values(checked).filter(Boolean).length;
 
   const tasks = [
     {
@@ -132,12 +139,21 @@ export default function Tasks() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-serif text-neutral-900 mb-2 flex items-center gap-2">
-          <CheckSquare size={32} className="text-primary-500" />
-          Task Tracker
-        </h2>
-        <p className="text-neutral-600">All tasks organized by phase and priority</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-3xl font-serif text-neutral-900 mb-2 flex items-center gap-2">
+            <CheckSquare size={32} className="text-primary-500" />
+            Task Tracker
+          </h2>
+          <p className="text-neutral-600">All tasks organized by phase and priority — check off as you complete them</p>
+        </div>
+        <div className="text-right">
+          <p className="text-2xl font-bold text-primary-500">{doneCount}/{tasks.length}</p>
+          <p className="text-xs text-neutral-400">tasks complete</p>
+          <div className="w-32 bg-neutral-100 rounded-full h-2 mt-1">
+            <div className="bg-primary-500 h-2 rounded-full transition-all" style={{ width: `${(doneCount / tasks.length) * 100}%` }} />
+          </div>
+        </div>
       </div>
 
       {/* Filter */}
@@ -163,11 +179,16 @@ export default function Tasks() {
         if (phaseTasks.length === 0) return null;
 
         const phaseNames: Record<number, string> = {
-          0: "Phase 0: Pre-Launch (Now → Mar 27)",
-          1: "Phase 1: The Story (Mar 28)",
-          2: "Phase 2: Brand Reveal (Early April)",
-          3: "Phase 3: First Single (Apr 20)",
+          0: "Phase 0: Pre-Launch (Now → Apr 8)",
+          1: "Phase 1: The Story (Apr 9)",
+          2: "Phase 2: Brand Reveal (Apr 16)",
+          3: "Phase 3: First Single (Mid-May)",
         };
+
+        // Get global task indices for this phase
+        const phaseTaskIndices = tasks
+          .map((t, i) => ({ t, i }))
+          .filter(({ t }) => t.phase === phase);
 
         return (
           <section key={phase}>
@@ -175,21 +196,40 @@ export default function Tasks() {
               {phaseNames[phase]}
             </h3>
             <div className="space-y-3">
-              {phaseTasks.map((task, idx) => (
-                <div key={idx} className="card-retro p-4 hover:shadow-retro-lg transition-shadow">
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h4 className="font-semibold text-neutral-900 flex-1">{task.title}</h4>
-                    <span className={`badge-retro ${priorityColor(task.priority)} whitespace-nowrap`}>
-                      {task.priority}
-                    </span>
-                  </div>
-                  <p className="text-sm text-neutral-700 mb-2">{task.description}</p>
-                  <div className="flex items-center justify-between text-xs text-neutral-600">
-                    <span>Owner: <strong>{task.owner}</strong></span>
-                    <span>Due: <strong>{task.due}</strong></span>
-                  </div>
-                </div>
-              ))}
+              {phaseTaskIndices
+                .filter(({ t }) => filter === "all" || t.priority === filter)
+                .map(({ t: task, i: globalIdx }) => {
+                  const isDone = !!checked[globalIdx];
+                  return (
+                    <div
+                      key={globalIdx}
+                      className={`card-retro p-4 transition-all cursor-pointer select-none ${isDone ? "opacity-60 bg-green-50 border-green-200" : "hover:shadow-retro-lg"}`}
+                      onClick={() => toggleTask(globalIdx)}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 mt-0.5">
+                          {isDone
+                            ? <CheckCircle size={20} className="text-green-500" />
+                            : <Circle size={20} className="text-neutral-300" />
+                          }
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-4 mb-1">
+                            <h4 className={`font-semibold ${isDone ? "line-through text-neutral-400" : "text-neutral-900"}`}>{task.title}</h4>
+                            <span className={`badge-retro ${priorityColor(task.priority)} whitespace-nowrap flex-shrink-0`}>
+                              {task.priority}
+                            </span>
+                          </div>
+                          <p className={`text-sm mb-2 ${isDone ? "text-neutral-400" : "text-neutral-700"}`}>{task.description}</p>
+                          <div className="flex items-center justify-between text-xs text-neutral-500">
+                            <span>Owner: <strong>{task.owner}</strong></span>
+                            <span>Due: <strong>{task.due}</strong></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </section>
         );
