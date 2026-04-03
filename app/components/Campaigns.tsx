@@ -61,21 +61,6 @@ const defaultCampaigns: Campaign[] = [
     pauseRule: "Pause if CPF exceeds $1.50 after Day 4",
     status: "not-started",
   },
-  {
-    id: "c3",
-    name: "Campaign 3 — Single Pre-Save Traffic",
-    objective: "Traffic → Link Clicks to pre-save page",
-    phase: "Single Activation",
-    dates: "3 weeks before single drop (~Late April / Early May)",
-    budget: "$30 total",
-    budgetPerDay: "$3/day over 10 days",
-    audience: "IG followers Custom Audience + Website retarget + Warm jam fan interests",
-    creative: "30-second teaser from music video shoot OR audio clip from single",
-    cta: "Pre-Save Now → DistroKid/feature.fm link",
-    successTarget: "CPC under $0.75 | 200+ pre-saves before release day",
-    pauseRule: "Pause if CPC exceeds $1.50 after 3 days — refresh creative",
-    status: "not-started",
-  },
 ];
 
 const statusConfig: Record<Campaign["status"], { label: string; color: string; icon: React.ElementType }> = {

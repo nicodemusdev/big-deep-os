@@ -62,8 +62,8 @@ const tools = [
   {
     category: "Distribution + DSPs",
     items: [
-      { name: "DistroKid", url: "https://distrokid.com", note: "Primary distributor for Eclipse + all future singles.", status: "confirmed" },
-      { name: "Spotify for Artists", url: "https://artists.spotify.com", note: "Editorial pitch window opens 7 days before release. Pitch Eclipse early.", status: "active" },
+      { name: "DistroKid", url: "https://distrokid.com", note: "Release order: Eclipse (Apr 24 YouTube, May 1 Spotify) → All At Once (May 21) → Keep Asking (Jun 26) → Something Alive (Jul 24). Submit Eclipse by ~Apr 17.", status: "confirmed" },
+      { name: "Spotify for Artists", url: "https://artists.spotify.com", note: "Eclipse hits Spotify May 1. Pitch All At Once (Single 1, drops May 21) for Fresh Finds / New Music Friday / jam playlists — pitch window opens May 14.", status: "active" },
       { name: "Apple Music for Artists", url: "https://artists.apple.com", note: "A-List picks, analytics.", status: "active" },
     ],
   },
@@ -93,9 +93,15 @@ const tools = [
 
 const openDecisions = [
   {
-    title: "Music Video 1 — concept + crew",
+    title: "Music Video — All At Once (Single 1) — concept + crew",
     priority: "🔴 This week",
-    note: "Mid-May Eclipse drop requires April shoot. No concept decided, no crew confirmed, no location locked. Blocking everything downstream.",
+    note: "All At Once drops Memorial Day Weekend. Requires April shoot. No concept decided, no crew confirmed, no location locked. Blocking everything downstream.",
+    urgent: true,
+  },
+  {
+    title: "Submit Eclipse to DistroKid — before Apr 17",
+    priority: "🔴 This week",
+    note: "YouTube drops Apr 24. Spotify/DSPs follow ~May 1. DistroKid needs ~2 weeks — submit by ~Apr 17 to hit the May 1 DSP date.",
     urgent: true,
   },
   {
@@ -125,7 +131,7 @@ const openDecisions = [
   {
     title: "Bearsville Theatre — confirm August date",
     priority: "Q2 2026",
-    note: "August is the goal. Sell out is non-negotiable. Booking conversation should start now.",
+    note: "Late summer / early fall — August or September. Sell out is non-negotiable. Booking conversation should start now.",
     urgent: false,
   },
 ];
@@ -232,21 +238,56 @@ export default function Research() {
         </div>
       </section>
 
+      {/* Album Tracklist */}
+      <div className="bg-neutral-900 text-white rounded-xl p-5">
+        <h3 className="font-bold mb-1 text-sm uppercase tracking-wide opacity-70">The Album</h3>
+        <p className="text-white font-serif text-xl mb-4">Big Deep <span className="text-neutral-400 text-sm font-sans font-normal">— self-titled · 15 tracks</span></p>
+        <div className="grid grid-cols-1 gap-1 text-sm">
+          {[
+            [1,  "Signal Drift",              ""],
+            [2,  "Whisper of Wings",           ""],
+            [3,  "Eclipse",                    "live version → Apr 24 (YouTube) / May 1 (Spotify)"],
+            [4,  "Signposts and Side Quests",  ""],
+            [5,  "All At Once",                "Single 1 → May 21"],
+            [6,  "Ran In Resonance",           ""],
+            [7,  "Who's to Say?",              ""],
+            [8,  "Keep Asking",                "Single 2 → Jun 26"],
+            [9,  "Back at the Start",          ""],
+            [10, "Something Alive",            "Single 3 → Jul 24"],
+            [11, "Everything is Fine",         ""],
+            [12, "Forget.Remember",            ""],
+            [13, "Spin Cycle",                 ""],
+            [14, "Do Our Time",                ""],
+            [15, "I Could Be Wrong",           ""],
+          ].map(([num, title, note]) => (
+            <div key={num as number} className="flex items-baseline gap-3 py-1 border-b border-neutral-800 last:border-0">
+              <span className="text-neutral-500 font-mono text-xs w-5 flex-shrink-0 text-right">{num}</span>
+              <span className={`flex-shrink-0 ${note ? "text-white font-medium" : "text-neutral-300"}`}>{title as string}</span>
+              {note && <span className="text-accent-400 text-xs font-mono">{note as string}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Reference */}
       <div className="bg-neutral-900 text-white rounded-xl p-5">
         <h3 className="font-bold mb-3 text-sm uppercase tracking-wide opacity-70">Key Reference Numbers</h3>
         <div className="space-y-2 text-sm">
           {[
-            ["Band Reveal", "April 16, 2026"],
-            ["Eclipse Single Drop", "Mid-May 2026"],
-            ["First Show", "Bearsville Theatre — August 2026"],
-            ["Ad Budget — Launch", "$50–75 (Video Views, Apr 16-22)"],
-            ["Ad Budget — Profile", "$30–40 (Profile Visit, Apr 23-30)"],
-            ["Ad Budget — Pre-Save", "$30 (Traffic, 3 wks before Eclipse)"],
-            ["Telegram Community", "t.me/+fesIFdrjEqxkZmEx"],
+            ["Band Reveal",             "April 16, 2026"],
+            ["Eclipse — YouTube",       "Apr 24, 2026 (Friday)"],
+            ["Eclipse — Spotify",       "May 1, 2026 (Friday)"],
+            ["Save the Date",           "May 7, 2026 (Thursday)"],
+            ["All At Once — Single 1",  "May 21, 2026 (Thursday)"],
+            ["Keep Asking — Single 2",  "Jun 26, 2026 (Friday)"],
+            ["Something Alive — S3",    "Jul 24, 2026 (Friday)"],
+            ["First Show",              "Bearsville Theatre — August or September 2026"],
+            ["Ad Budget — Launch",      "$50–75 (Video Views, Apr 16-22)"],
+            ["Ad Budget — Profile",     "$30–40 (Profile Visit, Apr 23-30)"],
+            ["Telegram Community",      "t.me/+fesIFdrjEqxkZmEx"],
           ].map(([label, value], i) => (
             <div key={i} className="flex gap-3">
-              <span className="text-accent-400 font-bold flex-shrink-0 w-32">{label}</span>
+              <span className="text-accent-400 font-bold flex-shrink-0 w-36">{label}</span>
               <span className="text-neutral-300 font-mono">{value}</span>
             </div>
           ))}

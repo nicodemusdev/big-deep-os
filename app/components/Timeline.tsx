@@ -32,28 +32,28 @@ const timeline = [
     status: "upcoming",
   },
   {
-    month: "April 23 — May 2026",
-    phase: "Phase 3: Build Phase",
-    key: "Sustained content cadence. Music Video 1 shoot (must happen in April). Pre-save campaign launches.",
-    milestones: ["TikTok 4–6x/week (Eclipse clips, jams, BTS)", "IG Stories daily", "Music Video 1 shoot — April", "Pre-save link goes live 3 wks before single", "Telegram community grows"],
+    month: "April 23–30, 2026",
+    phase: "Phase 3: Build Phase + Eclipse Drop",
+    key: "Apr 24 (Fri): Eclipse → YouTube. May 1 (Fri): Eclipse → Spotify. May 7 (Thu): Save the Date. May 21 (Thu): All At Once drops.",
+    milestones: ["TikTok 4–6x/week (Eclipse clips, All At Once teasers, BTS)", "IG Stories daily", "Apr 24 (Friday): Eclipse live version drops on YouTube", "May 1 (Friday): Eclipse hits Spotify + DSPs — second wave", "May 7 (Thursday): Save the Date — All At Once is coming", "May 21 (Thursday): 🚀 All At Once — Single 1 drops on all DSPs"],
     status: "planned",
   },
   {
-    month: "Mid-May 2026",
-    phase: "Phase 4: Single 1 Drop — Eclipse",
-    key: "First single release. Music video launch. Full activation campaign.",
-    milestones: ["Eclipse single drops on all DSPs", "Music video premieres on YouTube", "Meta Traffic ad to pre-save/stream page", "Full press push (JamBase, Relix follow-up)", "Spotify editorial pitch"],
+    month: "Memorial Day Weekend 2026",
+    phase: "Phase 4: All At Once — Single 1 (May 21)",
+    key: "First proper single. Music video launch. Pre-save campaign. Full press + ad activation.",
+    milestones: ["All At Once drops on all DSPs (May 21, Thursday)", "Music video premieres on YouTube", "Meta Traffic ad → pre-save/stream page", "Full press push (JamBase, Relix follow-up)", "Spotify editorial pitch — Fresh Finds / New Music Friday (pitch 7 days prior, May 14)"],
     status: "planned",
   },
   {
     month: "Summer 2026",
-    phase: "Phase 5: Album Announce + Singles 2 & 3",
-    key: "Full album announced. Singles 2 and 3 drop. First show announced.",
-    milestones: ["Single 2 release", "Single 3 release", "Album title, artwork, track listing reveal", "First show announced (Bearsville Theatre)"],
+    phase: "Phase 5: Singles — Keep Asking + Something Alive",
+    key: "Owning Thursdays. Singles cycle continues. First show announced. Album announcement.",
+    milestones: ["Jun 26 (Fri): Keep Asking (Single 2)", "Jul 24 (Fri): Something Alive (Single 3)", "Album title reveal: 'Big Deep' — self-titled, 15 tracks", "Album artwork reveal + track listing drop", "First show announced (Bearsville Theatre)"],
     status: "planned",
   },
   {
-    month: "August 2026",
+    month: "August / September 2026",
     phase: "Phase 6: First Show — Bearsville Theatre",
     key: "Sell out Bearsville. Live documentation. Touring cascade begins.",
     milestones: ["Bearsville Theatre — SELL OUT", "Ticket sales push begins 6 weeks before", "Pre-show rehearsal content", "Full live video documentation", "Touring announcement follows"],
@@ -127,11 +127,12 @@ export default function Timeline() {
         <h3 className="font-bold mb-4 text-sm uppercase tracking-wide opacity-70">Critical Dependencies</h3>
         <div className="space-y-2 text-sm">
           {[
-            ["Music Video 1", "Concept + crew must be decided this week — mid-May drop requires an April shoot"],
+            ["Eclipse to DistroKid", "YouTube Apr 24 (Fri) → Spotify May 1 (Fri). Submit to DistroKid by ~Apr 17."],
+            ["Music Video — All At Once", "Concept + crew must be decided this week — Memorial Day drop requires an April shoot"],
             ["Meta Pixel + Email Form", "Must be live before Apr 9 — L4LM article drives press traffic to BigDeep.Band"],
             ["Meta Ad Campaign", "Must be built and ready to launch the moment Inklines video goes live Apr 16"],
-            ["Bearsville Theatre", "August is the goal. Sell out is non-negotiable."],
-            ["Singles Sequence", "Each single teaches what to do with the next. Don't skip or reorder."],
+            ["Bearsville Theatre", "August or September — late summer/early fall. Sell out is non-negotiable."],
+            ["Singles Sequence", "Eclipse (Apr 24) → All At Once (May 21) → Keep Asking (Jun 26) → Something Alive (Jul 24). Fridays."],
           ].map(([dep, desc], i) => (
             <div key={i} className="flex gap-3">
               <span className="text-accent-400 font-bold flex-shrink-0">→</span>

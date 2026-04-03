@@ -172,8 +172,8 @@ const sections: Section[] = [
           <p className="font-bold text-primary-700 mb-2">The Three Campaign Modes</p>
           <div className="space-y-2">
             <div><span className="font-bold text-red-600">LAUNCH MODE</span> — Apr 8–22: All hands on deck. Budget active. Press coordinated. Content maximized.</div>
-            <div><span className="font-bold text-yellow-600">BUILD MODE</span> — Apr 23–Mid-May: Steady cadence. Testing content. Growing audience. No major spend.</div>
-            <div><span className="font-bold text-green-600">ACTIVATION MODE</span> — Mid-May single: New campaign. Spend increases. Full press push.</div>
+            <div><span className="font-bold text-yellow-600">BUILD MODE</span> — Apr 23–May: Steady cadence. Eclipse live drop Apr 24. Save the date Apr 30. Growing audience.</div>
+            <div><span className="font-bold text-green-600">ACTIVATION MODE</span> — All At Once (Single 1) Memorial Day Weekend: New campaign. Spend increases. Full press push.</div>
           </div>
         </div>
         <p><strong>The DDM Decision Stack:</strong> Every post and every dollar runs through 7 questions: What&apos;s the objective? Who&apos;s the audience? What action do I want? What does success look like? What do I measure? What do I cut if it&apos;s not working? What do I amplify?</p>
@@ -239,7 +239,7 @@ const sections: Section[] = [
         { id: "audit-pixel", label: "Meta Pixel installed on BigDeep.Band website", urgent: true },
         { id: "audit-handles", label: "All @BigDeepBand handles claimed: IG, TikTok, YouTube, Facebook", urgent: true },
         { id: "audit-telegram", label: "Telegram community link active and shareable" },
-        { id: "audit-mv1", label: "Music Video for Single 1 — concept decided", urgent: true, note: "⚠️ URGENT — mid-May release requires April shoot" },
+        { id: "audit-mv1", label: "Music Video — All At Once (Single 1) — concept decided", urgent: true, note: "⚠️ URGENT — Memorial Day Weekend release requires April shoot" },
       ],
     },
   },
@@ -358,7 +358,7 @@ const sections: Section[] = [
         </div>
         <div className="bg-green-50 border border-green-200 rounded-lg p-3">
           <p className="font-bold text-green-700">Apr 20–21 — The Show Before The Show</p>
-          <p>Meet Big Deep polaroid carousel (Apr 20). JamBase interview reshare. Utopia show footage on TikTok day-of and next day. Eclipse as the signature song — short clips first, long-form second.</p>
+          <p>Meet Big Deep polaroid carousel (Apr 20). JamBase interview reshare. Utopia show footage on TikTok day-of and next day. Eclipse live version drops Apr 24 — tease it with short clips first, long-form second.</p>
         </div>
       </div>
     ),
@@ -379,7 +379,7 @@ const sections: Section[] = [
         { id: "p2-apr17-jambase", label: "Apr 17 — JamBase email blast reshare" },
         { id: "p2-apr17-l4lm", label: "Apr 17 — L4LM follow-up reshare" },
         { id: "p2-apr17-ad-check", label: "Apr 17 — Check ad CPV. Under $0.05 = let it run. Over $0.08 = adjust targeting." },
-        { id: "p2-apr17-tiktok", label: "Apr 17 — TikTok: Eclipse clip or band intro. Strike while algorithm is warm." },
+        { id: "p2-apr17-tiktok", label: "Apr 17 — TikTok: Eclipse teaser clip or band intro. Strike while algorithm is warm." },
         { id: "p2-apr17-comments", label: "Apr 17 — Reply to all JamBase and Relix comments" },
         // APR 18-19
         { id: "p2-apr18", label: "Apr 18–19 — Daily TikTok (2x). Jordan Stories. Maintain momentum." },
@@ -408,16 +408,16 @@ const sections: Section[] = [
         <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
           <p className="font-bold text-green-700 mb-2">Build Phase Content Cadence</p>
           <div className="space-y-1 text-xs">
-            <div><strong>TikTok:</strong> 4–6x/week — Eclipse clips, jam moments, band personality</div>
+            <div><strong>TikTok:</strong> 4–6x/week — Eclipse clips, All At Once teaser moments, band personality</div>
             <div><strong>IG Stories:</strong> Daily — Jordan + members. Day-in-life, process, reshares.</div>
             <div><strong>IG Feed:</strong> 2x/week max — high quality only. Feed is a gallery, not a stream.</div>
-            <div><strong>YouTube:</strong> 1x/week — Full Wook+ interview, Eclipse full jam, song stories.</div>
+            <div><strong>YouTube:</strong> 1x/week — Full Wook+ interview, Eclipse full live version, song stories.</div>
             <div><strong>Telegram:</strong> 2–3x/week — Exclusive previews, direct updates, inner circle.</div>
           </div>
         </div>
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-          <p className="font-bold text-red-700">⚠️ URGENT: Music Video for Single 1</p>
-          <p className="text-sm mt-1">Mid-May release = post-production by May 1 = shoot must happen in APRIL. Concept must be decided THIS WEEK.</p>
+          <p className="font-bold text-red-700">⚠️ URGENT: Music Video — All At Once (Single 1)</p>
+          <p className="text-sm mt-1">Memorial Day Weekend release = post-production by mid-May = shoot must happen in APRIL. Concept must be decided THIS WEEK.</p>
         </div>
       </div>
     ),
@@ -427,10 +427,10 @@ const sections: Section[] = [
         { id: "p3-mv-concept", label: "Music Video 1 — Concept decided (narrative / performance / animated / hybrid)", urgent: true },
         { id: "p3-mv-crew", label: "Music Video 1 — Director / video crew booked", urgent: true },
         { id: "p3-mv-location", label: "Music Video 1 — Shoot location and date locked (must be in April)", urgent: true },
-        { id: "p3-mv-track", label: "Music Video 1 — Single 1 confirmed as final mix/master-ready", urgent: true },
+        { id: "p3-mv-track", label: "Music Video — All At Once confirmed as final mix/master-ready", urgent: true },
         { id: "p3-cadence-tiktok", label: "TikTok posting schedule set — 4–6 clips queued for the week" },
         { id: "p3-cadence-stories", label: "IG Stories plan set — Jordan posts daily, members active" },
-        { id: "p3-cadence-youtube", label: "YouTube: Eclipse full jam upload scheduled" },
+        { id: "p3-cadence-youtube", label: "YouTube: Eclipse full live version upload scheduled" },
         { id: "p3-telegram", label: "Telegram: Exclusive content posted this week" },
         { id: "p3-presave-platform", label: "Pre-save landing page created (DistroKid / feature.fm)" },
         { id: "p3-presave-link", label: "Pre-save link goes in bio 3 weeks before single drop" },
@@ -440,8 +440,8 @@ const sections: Section[] = [
       inputs: [
         { id: "p3-mv-concept-notes", label: "Music Video concept notes", placeholder: "Describe the concept, who's involved, location, vibe..." },
         { id: "p3-mv-shoot-date", label: "Music Video shoot date", placeholder: "e.g. April 24 — location TBD" },
-        { id: "p3-single-track", label: "Single 1 track name confirmed as", placeholder: "e.g. Eclipse" },
-        { id: "p3-single-date", label: "Single 1 release date target", placeholder: "e.g. May 15" },
+        { id: "p3-single-track", label: "Single 1 track name confirmed as", placeholder: "e.g. All At Once" },
+        { id: "p3-single-date", label: "Single 1 release date target", placeholder: "e.g. May 21 (Thursday)" },
       ],
     },
   },
@@ -475,7 +475,7 @@ const sections: Section[] = [
             </div>
           </div>
           <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-            <p className="font-bold text-green-700">Campaign 3: Single Pre-Save Traffic (3 wks before drop)</p>
+            <p className="font-bold text-green-700">Campaign 3: All At Once Pre-Save Traffic (3 wks before Memorial Day drop)</p>
             <div className="text-xs space-y-0.5 mt-1">
               <div><strong>Objective:</strong> Traffic → Link Clicks to pre-save page</div>
               <div><strong>Budget:</strong> $30 total / $3/day over 10 days</div>
@@ -501,7 +501,7 @@ const sections: Section[] = [
         { id: "ads-c1-check", label: "Campaign 1 reviewed on April 19 — CPV decision made (extend or adjust)" },
         { id: "ads-c2-built", label: "Campaign 2 (Profile Visit) built after April 22" },
         { id: "ads-c2-live", label: "Campaign 2 launched April 23" },
-        { id: "ads-c3-built", label: "Campaign 3 (Pre-Save Traffic) built 3 weeks before single drop" },
+        { id: "ads-c3-built", label: "Campaign 3 (All At Once Pre-Save Traffic) built 3 weeks before Memorial Day drop" },
       ],
       inputs: [
         { id: "ads-c1-cpv", label: "Campaign 1 — actual CPV after 3 days", placeholder: "e.g. $0.04" },

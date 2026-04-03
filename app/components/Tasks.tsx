@@ -211,42 +211,60 @@ const tasks: Task[] = [
     description: "6-cam video crew, 3 photographers, 60-70 guests. Capture everything. Assign camera roles before arrival. Pull TikTok clips same night if possible.",
   },
 
-  // ── May — Eclipse Single ───────────────────────────────────────────────────
+  // ── Pre-Memorial Day — Eclipse Live Single ────────────────────────────────
+  {
+    id: "t-eclipse-youtube",
+    phase: 4,
+    title: "Post Eclipse (live version) to YouTube — Apr 24",
+    owner: "Jordan",
+    due: "Apr 24 (Thursday) 🔴",
+    priority: "CRITICAL",
+    description: "Drop the 12-minute live version on YouTube first. Jam fans live here — YouTube gets the organic algorithm lift before the DSP release. Treat it as a live event document, not a single.",
+  },
   {
     id: "t-eclipse-distro",
     phase: 4,
-    title: "Submit Eclipse to DistroKid for distribution",
+    title: "Submit Eclipse to DistroKid — target Spotify drop ~May 1",
     owner: "Jordan",
-    due: "3 weeks before drop",
+    due: "Before Apr 17 🔴",
     priority: "CRITICAL",
-    description: "DistroKid requires ~2 week processing. Submit Eclipse at least 3 weeks before mid-May drop date to ensure Spotify/Apple Music are live on release day.",
+    description: "YouTube drops Apr 24 (Friday). Spotify/DSPs drop May 1 (Friday) for a second wave of mileage. DistroKid needs ~2 weeks — submit by approximately Apr 17.",
   },
   {
-    id: "t-eclipse-spotify",
+    id: "t-eclipse-savethedate",
     phase: 4,
-    title: "Pitch Eclipse to Spotify editorial",
+    title: "Save the Date announcement — Apr 30",
     owner: "Jordan",
-    due: "7 days before release",
+    due: "May 7 (Thursday)",
     priority: "HIGH",
-    description: "Spotify for Artists editorial pitch window opens 7 days before release. Pitch Eclipse for Fresh Finds, New Music Friday, or genre playlists. Write the pitch in advance.",
+    description: "Drop the Save the Date on May 7 (Thursday). Eclipse has been on Spotify for 6 days — momentum is warm. 2-week runway into All At Once drop May 21. Big Deep owns Thursdays.",
   },
   {
     id: "t-presave-campaign",
     phase: 4,
-    title: "Pre-save campaign + Traffic ad",
+    title: "All At Once — pre-save campaign + Traffic ad",
     owner: "Jordan",
-    due: "3 weeks before drop",
+    due: "3 weeks before Memorial Day",
     priority: "HIGH",
-    description: "Build pre-save landing page. Launch $30 Traffic ad driving to pre-save link. Push pre-save via Telegram community first.",
+    description: "Build pre-save landing page for All At Once. Launch $30 Traffic ad driving to pre-save link. Push pre-save via Telegram community first. All At Once drops May 21 (Thursday).",
+  },
+  {
+    id: "t-allAtOnce-spotify",
+    phase: 4,
+    title: "Pitch All At Once to Spotify editorial",
+    owner: "Jordan",
+    due: "7 days before Memorial Day drop",
+    priority: "HIGH",
+    description: "Pitch window opens 7 days before release. Pitch All At Once on May 14 for the May 21 drop. Lead with the energy and the jam-band backstory. Target Fresh Finds, New Music Friday, live/jam playlists.",
   },
   {
     id: "t-mv1-shoot",
     phase: 4,
-    title: "Music Video 1 shoot complete",
+    title: "All At Once — Music Video shoot complete",
     owner: "Jordan + crew",
-    due: "April (before May drop)",
+    due: "April (before Memorial Day drop)",
     priority: "CRITICAL",
-    description: "Must be shot and in edit before May. If concept isn't decided this week, the timeline collapses. Deliver: YouTube cut, IG Reel cut, TikTok cut, BTS footage.",
+    description: "All At Once is Single 1 — drops May 21 (Thursday). Shoot must be complete in April and in edit by early May. Deliver: YouTube cut, IG Reel cut, TikTok cut, BTS footage.",
   },
 ];
 
@@ -255,7 +273,7 @@ const phaseConfig: Record<number, { label: string; color: string; bg: string; bo
   1: { label: "📵 Apr 8–15 — Silent Wall",               color: "text-yellow-700", bg: "bg-yellow-50", border: "border-yellow-300" },
   2: { label: "🎸 Apr 16 — Reveal Day",                  color: "text-accent-700", bg: "bg-accent-50", border: "border-accent-300" },
   3: { label: "🚀 Apr 17–22 — Launch Week",              color: "text-primary-700",bg: "bg-primary-50",border: "border-primary-300" },
-  4: { label: "🎵 May — Eclipse Single Drop",            color: "text-green-700",  bg: "bg-green-50",  border: "border-green-300" },
+  4: { label: "🎵 Apr 24 + Memorial Day — Eclipse Drop + All At Once Single", color: "text-green-700",  bg: "bg-green-50",  border: "border-green-300" },
 };
 
 const priorityStyle: Record<string, string> = {

@@ -48,7 +48,7 @@ const platforms = [
     rules: [
       "TikTok is a sandbox — test hooks, clips, moments",
       "4–6x per week minimum (more = more discovery)",
-      "Eclipse clips, jam moments, BTS, personality",
+      "All At Once clips, jam moments, BTS, personality",
       "Pull 30-60 sec clips from Wook+ interview day of publish",
       "Clip from Utopia BTS dumps, Inception session, April 21 live",
       "Don't overthink it — consistency beats perfection here",
@@ -66,7 +66,7 @@ const platforms = [
     badge: "bg-red-100 text-red-700",
     rules: [
       "Wook+ interview publishes April 13 — reshare to Stories",
-      "Music Video 1 (Eclipse) premieres here — set premiere time",
+      "Eclipse music video premieres here — set premiere time",
       "April 21 live performance footage → YouTube long-form",
       "Utopia BTS footage → YouTube long-form after reveal",
       "Quality matters here — don't publish raw/unedited",
@@ -154,7 +154,7 @@ const aprilCadenceByPhase = [
     items: [
       { platform: "IG Feed", action: "1–2x/week — quality over quantity" },
       { platform: "IG Stories", action: "Daily — BTS, studio, journey content" },
-      { platform: "TikTok", action: "4–6x/week — music, personality, Eclipse teaser clips" },
+      { platform: "TikTok", action: "4–6x/week — music, personality, Eclipse + All At Once teaser clips" },
       { platform: "YouTube", action: "Utopia BTS long-form, music video BTS" },
       { platform: "Telegram", action: "Pre-save campaign drops here first" },
     ],

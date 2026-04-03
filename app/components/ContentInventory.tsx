@@ -14,12 +14,12 @@ const assetLibraries = [
       { label: "GoPro footage", ready: true },
       { label: "2-day audio recordings", ready: true },
       { label: "2-day photos", ready: true },
-      { label: "Eclipse — full audio (usable as-is)", ready: true },
-      { label: "Forget.Remember — jam segment", ready: true },
+      { label: "Eclipse — full audio, 12-min live version (usable as-is)", ready: true },
+      { label: "All At Once — full jam segment (Single 1 reference)", ready: true },
       { label: "Whisper of Wings — jam segment", ready: true },
     ],
     platforms: ["TikTok clips", "IG Stories BTS", "YouTube BTS"],
-    note: "Eclipse audio is the gem — usable for pre-save campaign and TikTok teaser clips.",
+    note: "Eclipse (12-min live): YouTube Apr 24 → Spotify May 1. All At Once = Single 1 (May 21). Keep Asking = Single 2 (Jun 26). Something Alive = Single 3 (Jul 24).",
   },
   {
     name: "Utopia Studios",
@@ -29,6 +29,7 @@ const assetLibraries = [
     statusLabel: "In Edit",
     assets: [
       { label: "Full album — in edit", ready: false },
+      { label: "Keep Asking — studio version (Single 2, Jun 26)", ready: false },
       { label: "Phone footage (raw)", ready: true },
       { label: "Individual member camera dumps", ready: true },
       { label: "3 days of photos", ready: true },
@@ -87,7 +88,7 @@ const assetLibraries = [
 ];
 
 const musicVideo = {
-  single: "Eclipse — Music Video 1",
+  single: "All At Once — Music Video (Single 1)",
   status: "urgent",
   deadline: "Must shoot in April",
   shootWindow: "April — No concept decided yet",
@@ -164,7 +165,7 @@ export default function ContentInventory() {
           </div>
 
           <p className="text-xs opacity-70 mt-4 border-t border-red-500 pt-3">
-            Mid-May Eclipse drop requires an April shoot. Concept + crew must be decided <strong className="text-white">this week</strong>.
+            All At Once (Single 1) drops Memorial Day Weekend — requires an April shoot. Concept + crew must be decided <strong className="text-white">this week</strong>.
           </p>
         </div>
       </section>
@@ -232,7 +233,7 @@ export default function ContentInventory() {
         <h3 className="font-bold text-neutral-900 mb-4 text-lg">Open Gaps</h3>
         <div className="space-y-2">
           {[
-            { gap: "Music Video 1 — concept + crew", why: "Mid-May Eclipse drop requires April shoot", by: "This week 🔴", urgent: true },
+            { gap: "All At Once music video — concept + crew", why: "Memorial Day Weekend drop requires April shoot", by: "This week 🔴", urgent: true },
             { gap: "@SarahDavida branding package locked", why: "All April 8 teaser posts need final logo", by: "Before Apr 8", urgent: true },
             { gap: "Music Video 2 + 3 planned", why: "Singles 2 + 3 Summer/Fall 2026", by: "Q3 planning", urgent: false },
             { gap: "Album artwork", why: "Summer album announce", by: "June 2026", urgent: false },
