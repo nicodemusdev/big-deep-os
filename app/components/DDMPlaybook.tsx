@@ -143,6 +143,7 @@ const HeroReference = () => (
           { platform: "TikTok", rules: "First 3 seconds hook is everything. Watch time = #1 signal. Post 4–6x/week. Consistency beats perfection." },
           { platform: "Instagram", rules: "Saves > Shares > Comments > Likes. Reels get more reach than carousels. Stories keep you top of mind." },
           { platform: "YouTube", rules: "Click-through rate + watch time. Titles/thumbnails matter. Long-form archive = SEO value." },
+          { platform: "X / Twitter", rules: "Engagement and recency drive reach. Replies > likes. Text-first. Best use: press reshares + engaging journalists. 3–4x/week max." },
           { platform: "Meta Ads", rules: "Let ad run 3 days before judging. Never edit a running ad. Duplicate + modify instead." },
         ].map((p, i) => (
           <div key={i} className="bg-white rounded-lg p-3 border border-neutral-200">
@@ -412,6 +413,7 @@ const sections: Section[] = [
             <div><strong>IG Stories:</strong> Daily — Jordan + members. Day-in-life, process, reshares.</div>
             <div><strong>IG Feed:</strong> 2x/week max — high quality only. Feed is a gallery, not a stream.</div>
             <div><strong>YouTube:</strong> 1x/week — Full Wook+ interview, Eclipse full live version, song stories.</div>
+            <div><strong>X / Twitter:</strong> 3–4x/week — press reshares, quick updates, engage journalists.</div>
             <div><strong>Telegram:</strong> 2–3x/week — Exclusive previews, direct updates, inner circle.</div>
           </div>
         </div>

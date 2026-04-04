@@ -14,6 +14,7 @@ import { google } from "googleapis";
 const SCOPES = [
   "https://www.googleapis.com/auth/calendar",
   "https://www.googleapis.com/auth/spreadsheets",
+  "https://www.googleapis.com/auth/gmail.send",
 ];
 
 // Load credentials JSON (the file you downloaded from Google Cloud Console)

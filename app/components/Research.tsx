@@ -85,6 +85,7 @@ const tools = [
     items: [
       { name: "Instagram @BigDeepBand", url: "https://instagram.com/BigDeepBand", note: "Feed silent Apr 8–15. Stories active Apr 9.", status: "claimed" },
       { name: "TikTok @BigDeepBand", url: "https://tiktok.com/@BigDeepBand", note: "Sandbox active Apr 9. 4–6x/week.", status: "claimed" },
+      { name: "X / Twitter @BigDeepBand", url: "https://x.com/BigDeepBand", note: "Press amplification + industry engagement. Reshare coverage immediately when it drops. 3–4x/week.", status: "claimed" },
       { name: "YouTube Big Deep", url: "https://youtube.com", note: "Wook+ Apr 13. Music Video 1 premiere TBD.", status: "claimed" },
       { name: "Facebook @BigDeepBand", url: "https://facebook.com/BigDeepBand", note: "Auto cross-post from IG.", status: "claimed" },
     ],

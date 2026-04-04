@@ -1,4 +1,4 @@
-import { Calendar, CheckSquare, Users, Music, Radio, BookOpen, Home, Brain, DollarSign } from "lucide-react";
+import { Calendar, CheckSquare, Users, Music, Radio, BookOpen, Home, Brain, DollarSign, Globe } from "lucide-react";
 
 interface NavigationProps {
   activeTab: string;
@@ -15,6 +15,7 @@ const navItems = [
   { id: "partners", label: "Partners", icon: Users, highlight: false },
   { id: "content", label: "Content", icon: Music, highlight: false },
   { id: "cadence", label: "Cadence", icon: Radio, highlight: false },
+  { id: "community", label: "Community", icon: Globe, highlight: true },
   { id: "research", label: "Research", icon: BookOpen, highlight: false },
 ];
 

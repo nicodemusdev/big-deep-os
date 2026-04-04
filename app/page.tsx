@@ -12,6 +12,7 @@ import Research from "./components/Research";
 import DDMPlaybook from "./components/DDMPlaybook";
 import Campaigns from "./components/Campaigns";
 import CalendarAdmin from "./components/CalendarAdmin";
+import CommunityIntegration from "./components/CommunityIntegration";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("ddm");
@@ -31,6 +32,7 @@ export default function Home() {
           {activeTab === "partners" && <Partners />}
           {activeTab === "content" && <ContentInventory />}
           {activeTab === "cadence" && <Cadence />}
+          {activeTab === "community" && <CommunityIntegration />}
           {activeTab === "research" && <Research />}
         </div>
       </div>
